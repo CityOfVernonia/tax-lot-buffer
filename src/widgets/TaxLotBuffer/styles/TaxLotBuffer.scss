@@ -1,0 +1,93 @@
+.tax-lot-buffer-widget {
+  display: flex;
+  flex-flow: column;
+  width: 300px;
+  background-color: $background-color;
+  padding: 1rem;
+
+  button {
+    svg {
+      width: 16px;
+      height: 16px;
+      fill: $background-color;
+    }
+  }
+
+  table tr th {
+    width: auto;
+    white-space: nowrap;
+  }
+  table tr td {
+    width: auto;
+  }
+
+  form {
+    display: flex;
+    flex-flow: row;
+    align-items: center;
+    margin-top: 1rem;
+    input,
+    button {
+      width: 100%;
+    }
+    span {
+      width: auto;
+      margin: 0 1rem 0 0.25rem;
+    }
+  }
+}
+
+.tax-lot-buffer-widget--results {
+  display: flex;
+  flex-flow: column;
+  margin-top: 1rem;
+  span {
+    margin-bottom: 1rem;
+  }
+}
+
+.tax-lot-buffer-widget--button-row {
+  display: flex;
+  flex-flow: row;
+  align-items: center;
+
+  button {
+    width: auto;
+    margin: 0 0.25rem;
+    &:first-child {
+      margin-left: 0;
+    }
+    &:last-child {
+      margin-right: 0;
+    }
+  }
+}
+
+.tax-lot-buffer-widget--feature-table {
+  position: absolute;
+  display: none;
+  align-items: center;
+  justify-content: center;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  z-index: 0;
+  background-color: $background-color--overlay;
+  &.feature-table--showing {
+    display: flex;
+    z-index: 900;
+  }
+
+  .esri-feature-table {
+    width: 90%;
+    height: 90%;
+  }
+
+  .feature-table--close-button {
+    position: absolute;
+    top: 6px;
+    right: 6px;
+    z-index: 1000;
+  }
+}
