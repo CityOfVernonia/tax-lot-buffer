@@ -23,8 +23,10 @@
   ],
   "include": [
     "src/**/*",
+    "node_modules/cov-arcgis-esm/src/**/*"
   ],
   "files": [
-    "src/interfaces.d.ts"
+    "src/interfaces.d.ts",
+    "node_modules/cov-arcgis-esm/src/interfaces.d.ts"
   ]
 }

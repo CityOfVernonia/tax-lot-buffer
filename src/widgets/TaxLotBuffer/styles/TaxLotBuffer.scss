@@ -6,6 +6,10 @@
   padding: 1rem;
 
   button {
+    &:disabled {
+      pointer-events: none;
+      opacity: 0.6;
+    }
     svg {
       width: 16px;
       height: 16px;

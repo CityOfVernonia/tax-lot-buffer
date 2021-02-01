@@ -136,5 +136,6 @@ a {
   }
 }
 
-@import "./App/styles/App.scss";
-@import "./widgets/TaxLotBuffer/styles/TaxLotBuffer.scss";
+@import "~cov-arcgis-esm/src/layouts/FullView/styles/FullView";
+
+@import "./widgets/TaxLotBuffer/styles/TaxLotBuffer";

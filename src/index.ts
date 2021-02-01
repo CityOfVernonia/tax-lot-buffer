@@ -7,7 +7,7 @@ import Basemap from '@arcgis/core/Basemap';
 import BingMapsLayer from '@arcgis/core/layers/BingMapsLayer';
 import FeatureLayer from '@arcgis/core/layers/FeatureLayer';
 
-import App from 'app/App';
+import FullMap from 'cov/layouts/FullView';
 import TaxLotBuffer from './widgets/TaxLotBuffer';
 
 esriConfig.portalUrl = 'https://gisportal.vernonia-or.gov/portal';
@@ -76,7 +76,7 @@ view.when(() => {
   );
 });
 
-const app = new App({
+const app = new FullMap({
   view,
   title: 'Tax Lot Buffer',
   container: document.createElement('div'),

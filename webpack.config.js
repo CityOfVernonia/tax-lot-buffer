@@ -70,6 +70,7 @@ const productionDevtool = false;
 // https://webpack.js.org/configuration/resolve/#resolvealias
 const resolveAlias = {
   app: path.resolve(__dirname, 'src'),
+  cov: path.resolve(__dirname, 'node_modules/cov-arcgis-esm/src/'),
 };
 
 // Workbox service workers.

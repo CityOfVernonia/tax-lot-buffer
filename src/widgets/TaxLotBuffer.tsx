@@ -8,8 +8,8 @@ import Widget from '@arcgis/core/widgets/Widget';
 
 import FeatureLayer from '@arcgis/core/layers/FeatureLayer';
 
-// import PrintViewModel from '@arcgis/core/widgets/Print/PrintViewModel';
-// import PrintTemplate from '@arcgis/core/tasks/support/PrintTemplate';
+import PrintViewModel from '@arcgis/core/widgets/Print/PrintViewModel';
+import PrintTemplate from '@arcgis/core/tasks/support/PrintTemplate';
 
 import { geodesicBuffer } from '@arcgis/core/geometry/geometryEngine';
 import Graphic from '@arcgis/core/Graphic';
@@ -102,13 +102,23 @@ export default class TaxLotBuffer extends Widget {
   @property()
   private _resultTable!: FeatureTable;
 
+  @property()
+  private _printer = new PrintViewModel({
+    printServiceUrl:
+      'https://gisportal.vernonia-or.gov/arcgis/rest/services/TaxMaps/PrintTaxMap/GPServer/Export%20Web%20Map',
+  });
+
+  @property()
+  @renderable()
+  private _printing = false;
+
   constructor(properties?: TaxLotBufferProperties) {
     super(properties);
     whenOnce(this, 'layer.loaded', this._init.bind(this));
   }
 
   private _init(): void {
-    const { view, layer, selectedSymbol, _resultTableContainer } = this;
+    const { view, layer, selectedSymbol, _resultTableContainer, _printer } = this;
 
     // wire hit test
     view.whenLayerView(layer).then((laverView: esri.FeatureLayerView): void => {
@@ -195,6 +205,9 @@ export default class TaxLotBuffer extends Widget {
     closeButton.classList.add(CSS.widgetButton, CSS.featureTableCloseButton);
     closeButton.addEventListener('click', this._toggleFeatureTable.bind(this));
     _resultTableContainer.append(closeButton);
+
+    // printer
+    _printer.view = view;
   }
 
   private _hitTest(response: esri.HitTestResult): void {
@@ -337,8 +350,43 @@ export default class TaxLotBuffer extends Widget {
     document.body.removeChild(a);
   }
 
+  private _print() {
+    const { view, _resultLayer, _printer } = this;
+
+    this._printing = true;
+
+    _resultLayer
+      .queryExtent({
+        where: '1 = 1',
+      })
+      .then(
+        async (extent: esri.Extent): Promise<void> => {
+          await view.goTo(extent);
+
+          _printer
+            .print(
+              new PrintTemplate({
+                format: 'pdf',
+                layout: 'TaxMapViewer' as any,
+              }),
+            )
+            .then((result: any): void => {
+              this._printing = false;
+              window.open(result.url, '_blank');
+            })
+            .catch((): void => {
+              this._printing = false;
+              window.alert('Print failed.');
+            });
+        },
+      )
+      .catch((): void => {
+        this._printing = false;
+      });
+  }
+
   render(): tsx.JSX.Element {
-    const { _feature, _results } = this;
+    const { _feature, _results, _printing } = this;
 
     if (!_feature) {
       return (
@@ -366,6 +414,23 @@ export default class TaxLotBuffer extends Widget {
                 <td class={CSS.td}>{attributes.ADDRESS}</td>
               </tr>
             ) : null}
+            <tr>
+              <th class={CSS.th}>Tax Account(s)</th>
+              <td class={CSS.td}>
+                {attributes.ACCOUNT_IDS.split(',').map((account: string) => {
+                  return (
+                    <a
+                      style="margin-right:0.25rem;"
+                      href={`http://www.helioncentral.com/columbiaat/MainQueryDetails.aspx?AccountID=${account}&QueryYear=2021&Roll=R`}
+                      target="_blank"
+                      rel="noopener"
+                    >
+                      {account}
+                    </a>
+                  );
+                })}
+              </td>
+            </tr>
           </table>
 
           {/* buffer form */}
@@ -402,13 +467,7 @@ export default class TaxLotBuffer extends Widget {
                     <path d={fileCsv16} />
                   </svg>
                 </button>
-                <button
-                  class={CSS.button}
-                  title="Print Map"
-                  onclick={() => {
-                    alert('Print coming soon.');
-                  }}
-                >
+                <button class={CSS.button} title="Print Map" disabled={_printing} bind={this} onclick={this._print}>
                   <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16">
                     <path d={print16} />
                   </svg>
