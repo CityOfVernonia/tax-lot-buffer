@@ -14,7 +14,7 @@ esriConfig.portalUrl = 'https://gisportal.vernonia-or.gov/portal';
 
 const taxLots = new FeatureLayer({
   portalItem: {
-    id: '2c2da300ecf34e679201059c51a16bbb',
+    id: 'a6063eb199e640e0bbc2d5ceca23de9a',
   },
   outFields: ['*'],
   popupEnabled: false,
