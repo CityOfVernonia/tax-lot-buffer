@@ -421,7 +421,7 @@ export default class TaxLotBuffer extends Widget {
                   return (
                     <a
                       style="margin-right:0.25rem;"
-                      href={`http://www.helioncentral.com/columbiaat/MainQueryDetails.aspx?AccountID=${account}&QueryYear=2021&Roll=R`}
+                      href={`https://propertyquery.columbiacountyor.gov/columbiaat/MainQueryDetails.aspx?AccountID=${account}&QueryYear=2021&Roll=R`}
                       target="_blank"
                       rel="noopener"
                     >
