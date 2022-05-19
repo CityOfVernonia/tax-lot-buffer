@@ -7,3 +7,7 @@ An interactive mapping application for buffering and selecting tax lots within _
 Particularly handy for those who find themselves needing to identify tax lots winith _n_ feet of a tax lot.
 
 https://vernonia-tax-lot-buffer.netlify.app
+
+***
+
+Made with :heart: and :coffee: in Vernonia, Oregon

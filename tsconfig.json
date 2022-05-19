@@ -1,32 +1,23 @@
 {
   "compilerOptions": {
-    "target": "esnext",
-    "module": "commonjs",
-    "declaration": true,
+    "lib": [
+      "ESNext",
+      "dom",
+    ],
     "strict": true,
-    "allowSyntheticDefaultImports": true,
     "esModuleInterop": true,
-    "skipLibCheck": true,
-    "forceConsistentCasingInFileNames": true,
     "importHelpers": true,
     "paths": {
-      "tslib" : ["./node_modules/tslib/tslib.d.ts"]
+      "tslib": ["./node_modules/tslib/tslib.d.ts"]
     },
     "experimentalDecorators": true,
     "jsx": "react",
-    "jsxFactory": "tsx"
+    "jsxFactory": "tsx",
+    "types": [
+      "@esri/calcite-components"
+    ]
   },
-  "types": [
-    "esri",
-    "papaparse",
-    "app"
-  ],
   "include": [
-    "src/**/*",
-    "node_modules/cov-arcgis-esm/src/**/*"
-  ],
-  "files": [
-    "src/interfaces.d.ts",
-    "node_modules/cov-arcgis-esm/src/interfaces.d.ts"
+    "src/**/*"
   ]
 }
